@@ -1,8 +1,10 @@
-import { shipFactory } from "../ship";
+import { shipFactory } from "../scripts/ship";
+
+const mockShipBuilder = jest.fn(shipFactory);
 
 describe("ship suite", () => {
   test("returns object", () => {
-    expect(shipFactory(3, 0, false)).toMatchObject({
+    expect(mockShipBuilder(3, 0, false)).toMatchObject({
       length: 3,
       hits: 0,
       sunk: false,

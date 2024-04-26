@@ -2,6 +2,7 @@ export function gameboardFactory(board) {
   board = [];
   let tempArr = [];
   let hitLocations = [];
+  let allLocations = [];
   for (let i = 0; i < 10; i++) {
     for (let j = 0; j < 10; j++) {
       tempArr.push({

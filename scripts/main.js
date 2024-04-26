@@ -6,4 +6,8 @@ shipOne.hit(shipOne);
 shipOne.hit(shipOne);
 shipOne.hit(shipOne);
 let boardOne = gameboardFactory();
-console.log(boardOne);
+console.log(boardOne.board);
+boardOne.board.map((locationObject) => {
+  console.log(locationObject.hit);
+});
+shipOne.generateShipLocation(shipOne);

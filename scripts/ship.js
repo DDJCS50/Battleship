@@ -5,6 +5,7 @@ export function shipFactory(length, hits, sunk) {
 
   let locationArray = [];
   let hitLocationArray = [];
+  let shipDirection = "north";
 
   function hit(ship) {
     ship.hits++;
@@ -25,14 +26,28 @@ export function shipFactory(length, hits, sunk) {
     console.log(ship.locationArray);
   }
 
+  function shipOrientation(ship, direction) {
+    if (direction == "north") {
+      ship.shipDirection = "north";
+    } else if (direction == "south") {
+      ship.shipDirection = "south";
+    } else if (direction == "east") {
+      ship.shipDirection = "east";
+    } else if (direction == "west") {
+      ship.shipDirection = "west";
+    }
+  }
+
   return {
     length,
     hits,
     sunk,
     locationArray,
     hitLocationArray,
+    shipDirection,
     hit,
     isSunk,
     generateShipLocation,
+    shipOrientation,
   };
 }

@@ -11,3 +11,6 @@ boardOne.board.map((locationObject) => {
   console.log(locationObject.hit);
 });
 shipOne.generateShipLocation(shipOne);
+let shipTwo = boardOne.placeShip(boardOne, [5, 5]);
+console.log(shipTwo);
+console.log(boardOne.board[0].location);

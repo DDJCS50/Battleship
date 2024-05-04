@@ -6,16 +6,21 @@ export function gameboardFactory(board) {
   let hitLocations = [];
   let allLocations = [];
   let shipsOnBoard = [];
-  for (let i = 0; i < 10; i++) {
-    for (let j = 0; j < 10; j++) {
-      tempArr.push({
-        hit: false,
-        location: [i, j],
-        shipPresent: false,
-      });
+
+  function _createInitialBoard() {
+    for (let i = 0; i < 10; i++) {
+      for (let j = 0; j < 10; j++) {
+        tempArr.push({
+          hit: false,
+          location: [i, j],
+          shipPresent: false,
+        });
+      }
     }
+    board = tempArr;
   }
-  board = tempArr;
+  _createInitialBoard();
+
   function placeShip(board, location) {
     if (
       location[0] > 9 ||
@@ -31,7 +36,7 @@ export function gameboardFactory(board) {
     tempShip.shipOrientation(tempShip, "north");
     let direction = tempShip.shipDirection;
     let validity = true;
-    validity = validLocation(board.board, tempShip, nose);
+    validity = _validLocation(board.board, tempShip, nose);
     if (validity == true) {
       for (let i = 0; i < tempShip.length; i++) {
         if (direction == "north") {
@@ -48,7 +53,7 @@ export function gameboardFactory(board) {
     return tempShip;
   }
 
-  function validLocation(board, ship, location) {
+  function _validLocation(board, ship, location) {
     let nose = location;
     let validTallies = 0;
 
@@ -125,6 +130,5 @@ export function gameboardFactory(board) {
     shipsOnBoard,
     placeShip,
     receiveAttack,
-    validLocation,
   };
 }

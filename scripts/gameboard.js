@@ -50,6 +50,8 @@ export function gameboardFactory(board) {
         }
       }
     }
+    shipsOnBoard.push(tempShip);
+    console.log(shipsOnBoard);
     return tempShip;
   }
 
@@ -123,7 +125,16 @@ export function gameboardFactory(board) {
     }
   }
 
-  function receiveAttack() {}
+  function receiveAttack(coordinates) {
+    for (let i = 0; i < shipsOnBoard.length; i++) {
+      for (let j = 0; j < shipsOnBoard[i].length; j++) {
+        if (coordinates[0] == shipsOnBoard[i].locationArray[j][0]) {
+        }
+        console.log(shipsOnBoard[i].locationArray[j][0]);
+        console.log(shipsOnBoard[i].locationArray[j][1]);
+      }
+    }
+  }
   return {
     board,
     hitLocations,

@@ -126,12 +126,36 @@ export function gameboardFactory(board) {
   }
 
   function receiveAttack(coordinates) {
+    if (_validAttack(coordinates) != true) {
+      console.log("Invalid attack");
+      return;
+    }
     for (let i = 0; i < shipsOnBoard.length; i++) {
       for (let j = 0; j < shipsOnBoard[i].length; j++) {
-        if (coordinates[0] == shipsOnBoard[i].locationArray[j][0]) {
+        if (
+          coordinates[0] == shipsOnBoard[i].locationArray[j][0] &&
+          coordinates[1] == shipsOnBoard[i].locationArray[j][1]
+        ) {
+          shipsOnBoard[i].hit(shipsOnBoard[i]);
+          shipsOnBoard[i].hitLocationArray.push(coordinates);
+          hitLocations.push(coordinates);
+          console.log(shipsOnBoard[i]);
         }
         console.log(shipsOnBoard[i].locationArray[j][0]);
         console.log(shipsOnBoard[i].locationArray[j][1]);
+      }
+    }
+  }
+
+  function _validAttack(locationInput) {
+    if (hitLocations.length == 0) {
+      return true;
+    }
+    for (let i = 0; i < hitLocations.length; i++) {
+      if (hitLocations[i].toString() == locationInput.toString()) {
+        return false;
+      } else {
+        return true;
       }
     }
   }

@@ -17,4 +17,5 @@ let shipThree = boardOne.placeShip(boardOne, [3, 3]);
 // console.log(shipTwo);
 console.log(shipThree);
 // console.log(boardOne.board[0].location);
-boardOne.receiveAttack([5, 5]);
+boardOne.receiveAttack([3, 2]);
+boardOne.receiveAttack([3, 2]);

@@ -1,31 +1,20 @@
-import { shipFactory } from "./ship.js";
 import { gameboardFactory } from "./gameboard.js";
 
-let shipOne = shipFactory(3, 0, false);
-shipOne.hit(shipOne);
-shipOne.hit(shipOne);
-shipOne.hit(shipOne);
 let boardOne = gameboardFactory();
-console.log(boardOne.board);
-// boardOne.board.map((locationObject) => {
-//   console.log(locationObject.hit);
-// });
-// shipOne.generateShipLocation(shipOne);
-// let shipTwo = boardOne.placeShip(boardOne, [10, 10]);
-// boardOne.board[33].shipPresent = true;
-let shipThree = boardOne.placeShip(boardOne, [3, 3]);
-let shipFour = boardOne.placeShip(boardOne, [4, 3]);
-// console.log(shipTwo);
-// console.log(shipThree);
-// console.log(boardOne.board[0].location);
-boardOne.receiveAttack([3, 3]);
-boardOne.receiveAttack([3, 2]);
-boardOne.receiveAttack([3, 1]);
 
-boardOne.receiveAttack([4, 3]);
-boardOne.receiveAttack([4, 2]);
-boardOne.receiveAttack([4, 1]);
-console.log(shipThree);
-// boardOne.receiveAttack([3, 2]);
+let shipTwo = boardOne.placeShip(boardOne, [10, 10]);
+let shipThree = boardOne.placeShip(boardOne, ["D", 3]);
+let shipFour = boardOne.placeShip(boardOne, [6, 3]);
+boardOne.receiveAttack(["D", 3]);
+boardOne.receiveAttack(["D", 2]);
+boardOne.receiveAttack(["D", 1]);
+boardOne.receiveAttack(["E", 3]);
+boardOne.receiveAttack(["E", 2]);
+boardOne.receiveAttack(["E", 1]);
+boardOne.receiveAttack(["E", 2]);
+boardOne.receiveAttack(["E", 2]);
+boardOne.receiveAttack(["E", 2]);
+boardOne.receiveAttack(["E", 2]);
+console.log(boardOne.shipsOnBoard);
 console.log(boardOne.board);
 console.log(boardOne);

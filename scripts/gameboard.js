@@ -5,13 +5,14 @@ export function gameboardFactory(board) {
   let tempArr = [];
   let hitLocations = [];
   let shipsOnBoard = [];
+  let alpha = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
 
   function _createInitialBoard() {
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 10; j++) {
         tempArr.push({
           hit: false,
-          location: [i, j],
+          location: [alpha[i], j],
           shipPresent: false,
         });
       }
@@ -21,12 +22,7 @@ export function gameboardFactory(board) {
   _createInitialBoard();
 
   function placeShip(board, location) {
-    if (
-      location[0] > 9 ||
-      location[0] < 0 ||
-      location[1] > 9 ||
-      location[1] < 0
-    ) {
+    if (_invalidLocation(location)) {
       console.log("invalid location input");
       return;
     }
@@ -132,28 +128,31 @@ export function gameboardFactory(board) {
     for (let i = 0; i < shipsOnBoard.length; i++) {
       for (let j = 0; j < shipsOnBoard[i].length; j++) {
         if (
-          coordinates[0] == shipsOnBoard[i].locationArray[j][0] &&
-          coordinates[1] == shipsOnBoard[i].locationArray[j][1]
+          coordinates.toString() == shipsOnBoard[i].locationArray[j].toString()
         ) {
           shipsOnBoard[i].hit(shipsOnBoard[i]);
           shipsOnBoard[i].isSunk(shipsOnBoard[i]);
-          hitLocations.push(coordinates);
-          _updateBoardHits(coordinates);
         }
       }
     }
+    hitLocations.push(coordinates);
+    _updateBoardHits(coordinates);
   }
 
   function _validAttack(locationInput) {
+    let attackExists = false;
     if (hitLocations.length == 0) {
       return true;
     }
-    for (let i = 0; i < hitLocations.length; i++) {
-      if (hitLocations[i].toString() == locationInput.toString()) {
-        return false;
-      } else {
-        return true;
-      }
+
+    attackExists = hitLocations.some(
+      (location) => location.toString() == locationInput.toString()
+    );
+
+    if (attackExists) {
+      return false;
+    } else {
+      return true;
     }
   }
 
@@ -173,6 +172,22 @@ export function gameboardFactory(board) {
         square.hit = true;
       }
     });
+  }
+
+  function _invalidLocation(input) {
+    if (input[1] > 9 || input[1] < 0) {
+      return true;
+    }
+
+    if (typeof input[0] != "string") {
+      return true;
+    }
+
+    if (!alpha.includes(input[0].toUpperCase())) {
+      return true;
+    }
+
+    return false;
   }
   return {
     board,

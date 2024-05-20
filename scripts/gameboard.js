@@ -4,7 +4,6 @@ export function gameboardFactory(board) {
   board = [];
   let tempArr = [];
   let hitLocations = [];
-  let allLocations = [];
   let shipsOnBoard = [];
 
   function _createInitialBoard() {
@@ -51,7 +50,7 @@ export function gameboardFactory(board) {
       }
     }
     shipsOnBoard.push(tempShip);
-    console.log(shipsOnBoard);
+    _updateBoardLocations(tempShip);
     return tempShip;
   }
 
@@ -137,12 +136,10 @@ export function gameboardFactory(board) {
           coordinates[1] == shipsOnBoard[i].locationArray[j][1]
         ) {
           shipsOnBoard[i].hit(shipsOnBoard[i]);
-          shipsOnBoard[i].hitLocationArray.push(coordinates);
+          shipsOnBoard[i].isSunk(shipsOnBoard[i]);
           hitLocations.push(coordinates);
-          console.log(shipsOnBoard[i]);
+          _updateBoardHits(coordinates);
         }
-        console.log(shipsOnBoard[i].locationArray[j][0]);
-        console.log(shipsOnBoard[i].locationArray[j][1]);
       }
     }
   }
@@ -158,6 +155,24 @@ export function gameboardFactory(board) {
         return true;
       }
     }
+  }
+
+  function _updateBoardLocations(ship) {
+    ship.locationArray.forEach((location) => {
+      board.forEach((square) => {
+        if (square.location.toString() == location.toString()) {
+          square.shipPresent = true;
+        }
+      });
+    });
+  }
+
+  function _updateBoardHits(hitInput) {
+    board.forEach((square) => {
+      if (square.location.toString() == hitInput.toString()) {
+        square.hit = true;
+      }
+    });
   }
   return {
     board,

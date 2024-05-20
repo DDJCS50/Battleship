@@ -64,7 +64,6 @@ export function gameboardFactory(board) {
             if (square.hit == true || square.shipPresent == true) {
               console.log("invalid");
             } else {
-              console.log("valid");
               validTallies++;
             }
           }
@@ -78,7 +77,6 @@ export function gameboardFactory(board) {
             if (square.hit == true || square.shipPresent == true) {
               console.log("invalid");
             } else {
-              console.log("valid");
               validTallies++;
             }
           }
@@ -92,7 +90,6 @@ export function gameboardFactory(board) {
             if (square.hit == true || square.shipPresent == true) {
               console.log("invalid");
             } else {
-              console.log("valid");
               validTallies++;
             }
           }
@@ -106,7 +103,6 @@ export function gameboardFactory(board) {
             if (square.hit == true || square.shipPresent == true) {
               console.log("invalid");
             } else {
-              console.log("valid");
               validTallies++;
             }
           }

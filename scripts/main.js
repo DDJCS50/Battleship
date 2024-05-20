@@ -15,6 +15,4 @@ boardOne.receiveAttack(["E", 2]);
 boardOne.receiveAttack(["E", 2]);
 boardOne.receiveAttack(["E", 2]);
 boardOne.receiveAttack(["E", 2]);
-console.log(boardOne.shipsOnBoard);
-console.log(boardOne.board);
 console.log(boardOne);

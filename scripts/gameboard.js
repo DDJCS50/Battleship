@@ -28,7 +28,7 @@ export function gameboardFactory(board) {
     }
     let nose = location;
     let tempShip = shipFactory(3, 0, false);
-    tempShip.shipOrientation(tempShip, "north");
+    tempShip.shipOrientation(tempShip, "west");
     let direction = tempShip.shipDirection;
     let validity = true;
     validity = _validLocation(board.board, tempShip, nose);
@@ -39,11 +39,19 @@ export function gameboardFactory(board) {
         } else if (direction == "south") {
           tempShip.locationArray.push([nose[0], nose[1] + i]);
         } else if (direction == "east") {
-          tempShip.locationArray.push([nose[0] - i, nose[1]]);
+          tempShip.locationArray.push([
+            alpha[alpha.indexOf(nose[0]) - i],
+            nose[1],
+          ]);
         } else if (direction == "west") {
-          tempShip.locationArray.push([nose[0] + i, nose[1]]);
+          tempShip.locationArray.push([
+            alpha[alpha.indexOf(nose[0]) + i],
+            nose[1],
+          ]);
         }
       }
+    } else {
+      return;
     }
     shipsOnBoard.push(tempShip);
     _updateBoardLocations(tempShip);
@@ -53,61 +61,19 @@ export function gameboardFactory(board) {
   function _validLocation(board, ship, location) {
     let nose = location;
     let validTallies = 0;
+    let tempLocation;
 
     for (let i = 0; i < ship.length; i++) {
-      if (ship.shipDirection == "north") {
-        board.forEach((square) => {
-          if (
-            square.location[0] == nose[0] &&
-            square.location[1] == nose[1] - i
-          ) {
-            if (square.hit == true || square.shipPresent == true) {
-              console.log("invalid");
-            } else {
-              validTallies++;
-            }
+      board.forEach((square) => {
+        tempLocation = _validLocationHelperIterate(nose, i, ship.shipDirection);
+        if (square.location.toString() == tempLocation.toString()) {
+          if (square.hit == true || square.shipPresent == true) {
+            console.log("invalid");
+          } else {
+            validTallies++;
           }
-        });
-      } else if (ship.shipDirection == "south") {
-        board.forEach((square) => {
-          if (
-            square.location[0] == nose[0] &&
-            square.location[1] == nose[1] + i
-          ) {
-            if (square.hit == true || square.shipPresent == true) {
-              console.log("invalid");
-            } else {
-              validTallies++;
-            }
-          }
-        });
-      } else if (ship.shipDirection == "east") {
-        board.forEach((square) => {
-          if (
-            square.location[0] == nose[0] - i &&
-            square.location[1] == nose[1]
-          ) {
-            if (square.hit == true || square.shipPresent == true) {
-              console.log("invalid");
-            } else {
-              validTallies++;
-            }
-          }
-        });
-      } else if (ship.shipDirection == "west") {
-        board.forEach((square) => {
-          if (
-            square.location[0] == nose[0] + i &&
-            square.location[1] == nose[1]
-          ) {
-            if (square.hit == true || square.shipPresent == true) {
-              console.log("invalid");
-            } else {
-              validTallies++;
-            }
-          }
-        });
-      }
+        }
+      });
     }
     if (validTallies == ship.length) {
       return true;
@@ -136,6 +102,10 @@ export function gameboardFactory(board) {
   }
 
   function _validAttack(locationInput) {
+    if (typeof locationInput[0] != "string") {
+      return false;
+    }
+    locationInput[0] = locationInput[0].toUpperCase();
     let attackExists = false;
     if (hitLocations.length == 0) {
       return true;
@@ -184,6 +154,28 @@ export function gameboardFactory(board) {
     }
 
     return false;
+  }
+
+  function _validLocationHelperIterate(
+    currentShipPart,
+    iteration,
+    shipBowDirection
+  ) {
+    if (shipBowDirection == "north") {
+      return [currentShipPart[0], currentShipPart[1] - iteration];
+    } else if (shipBowDirection == "south") {
+      return [currentShipPart[0], currentShipPart[1] + iteration];
+    } else if (shipBowDirection == "east") {
+      return [
+        alpha[alpha.indexOf(currentShipPart[0]) - iteration],
+        currentShipPart[1],
+      ];
+    } else if (shipBowDirection == "west") {
+      return [
+        alpha[alpha.indexOf(currentShipPart[0]) + iteration],
+        currentShipPart[1],
+      ];
+    }
   }
   return {
     board,

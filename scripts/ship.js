@@ -4,7 +4,7 @@ export function shipFactory(length, hits, sunk) {
   if (sunk === undefined) sunk = false;
 
   let locationArray = [];
-  let shipDirection = "north";
+  let shipDirection = "east";
 
   function hit(ship) {
     ship.hits++;

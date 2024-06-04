@@ -1,3 +1,4 @@
+import { generateShipLocation } from "./location-randomizer.js";
 import { shipFactory } from "./ship.js";
 
 export function gameboardFactory(board) {
@@ -23,12 +24,13 @@ export function gameboardFactory(board) {
 
   function placeShip(board, location, inputDirection, name) {
     if (_invalidLocation(location)) {
-      console.log("invalid location input");
+      console.log("invalid location input, generating new ship");
+      generateShipLocation();
       return;
     }
     let nose = location;
     let tempShip = shipFactory(3, 0, false, inputDirection, name);
-    // tempShip.shipOrientation(tempShip, inputDirection);
+
     let direction = tempShip.shipDirection;
     let validity = true;
     validity = _validLocation(board.board, tempShip, nose);
@@ -51,10 +53,15 @@ export function gameboardFactory(board) {
         }
       }
     } else {
+      console.log("ship present/ ship goes off board, generating new ship");
+      generateShipLocation();
       return;
     }
-    shipsOnBoard.push(tempShip);
-    _updateBoardLocations(tempShip);
+
+    if (validity == true) {
+      shipsOnBoard.push(tempShip);
+      _updateBoardLocations(tempShip);
+    }
     return tempShip;
   }
 
@@ -93,6 +100,7 @@ export function gameboardFactory(board) {
           coordinates.toString() == shipsOnBoard[i].locationArray[j].toString()
         ) {
           shipsOnBoard[i].hit(shipsOnBoard[i]);
+          shipsOnBoard[i].shipHitLocations.push(coordinates);
           shipsOnBoard[i].isSunk(shipsOnBoard[i]);
         }
       }
@@ -184,6 +192,7 @@ export function gameboardFactory(board) {
     board,
     hitLocations,
     shipsOnBoard,
+    alpha,
     placeShip,
     receiveAttack,
   };

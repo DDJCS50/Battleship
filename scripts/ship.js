@@ -4,26 +4,21 @@ export function shipFactory(length, hits, sunk, shipDirection, name) {
   if (sunk === undefined) sunk = false;
 
   let locationArray = [];
+  let shipHitLocations = [];
   if (shipDirection == undefined) shipDirection = "east";
   if (name == undefined) name = "defaultShip";
 
   function hit(ship) {
+    console.log(`Ship ${name} Hit!`);
     ship.hits++;
   }
 
   function isSunk(ship) {
     if (ship.hits === ship.length) {
       ship.sunk = true;
-      console.log("Battleship Sunk!");
+      console.log(`Battleship ${name} Sunk!`);
       // alert("Battleship Sunk!");
     } else ship.sunk = false;
-  }
-
-  function generateShipLocation(ship) {
-    ship.locationArray.push([
-      Math.floor(Math.random() * 10),
-      Math.floor(Math.random() * 10),
-    ]);
   }
 
   function shipOrientation(ship, direction) {
@@ -45,9 +40,9 @@ export function shipFactory(length, hits, sunk, shipDirection, name) {
     locationArray,
     shipDirection,
     name,
+    shipHitLocations,
     hit,
     isSunk,
-    generateShipLocation,
     shipOrientation,
   };
 }

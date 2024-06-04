@@ -21,14 +21,14 @@ export function gameboardFactory(board) {
   }
   _createInitialBoard();
 
-  function placeShip(board, location) {
+  function placeShip(board, location, inputDirection, name) {
     if (_invalidLocation(location)) {
       console.log("invalid location input");
       return;
     }
     let nose = location;
-    let tempShip = shipFactory(3, 0, false);
-    tempShip.shipOrientation(tempShip, "west");
+    let tempShip = shipFactory(3, 0, false, inputDirection, name);
+    // tempShip.shipOrientation(tempShip, inputDirection);
     let direction = tempShip.shipDirection;
     let validity = true;
     validity = _validLocation(board.board, tempShip, nose);
@@ -104,6 +104,8 @@ export function gameboardFactory(board) {
   function _validAttack(locationInput) {
     if (typeof locationInput[0] != "string") {
       return false;
+    } else if (!alpha.includes(locationInput[0].toUpperCase())) {
+      return false;
     }
     locationInput[0] = locationInput[0].toUpperCase();
     let attackExists = false;
@@ -161,6 +163,7 @@ export function gameboardFactory(board) {
     iteration,
     shipBowDirection
   ) {
+    currentShipPart[0] = currentShipPart[0].toUpperCase();
     if (shipBowDirection == "north") {
       return [currentShipPart[0], currentShipPart[1] - iteration];
     } else if (shipBowDirection == "south") {

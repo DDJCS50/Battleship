@@ -1,10 +1,11 @@
-export function shipFactory(length, hits, sunk) {
+export function shipFactory(length, hits, sunk, shipDirection, name) {
   if (length === undefined) length = 0;
   if (hits === undefined) hits = 0;
   if (sunk === undefined) sunk = false;
 
   let locationArray = [];
-  let shipDirection = "east";
+  if (shipDirection == undefined) shipDirection = "east";
+  if (name == undefined) name = "defaultShip";
 
   function hit(ship) {
     ship.hits++;
@@ -43,6 +44,7 @@ export function shipFactory(length, hits, sunk) {
     sunk,
     locationArray,
     shipDirection,
+    name,
     hit,
     isSunk,
     generateShipLocation,

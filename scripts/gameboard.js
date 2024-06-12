@@ -7,6 +7,10 @@ export function gameboardFactory(board) {
   let hitLocations = [];
   let shipsOnBoard = [];
   let alpha = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+  let captainShips = [];
+  let largeShips = [];
+  let mediumShips = [];
+  let smallShips = [];
 
   function _createInitialBoard() {
     for (let i = 0; i < 10; i++) {
@@ -22,14 +26,17 @@ export function gameboardFactory(board) {
   }
   _createInitialBoard();
 
-  function placeShip(board, location, inputDirection, name) {
+  function placeShip(board, location, inputDirection, name, shipLength) {
     if (_invalidLocation(location)) {
       console.log("invalid location input, generating new ship");
       generateShipLocation();
       return;
+    } else if (_shipLengthValid(shipLength) == false) {
+      console.log(`${name} has an invalid ship length`);
+      return;
     }
     let nose = location;
-    let tempShip = shipFactory(3, 0, false, inputDirection, name);
+    let tempShip = shipFactory(shipLength, 0, false, inputDirection, name);
 
     let direction = tempShip.shipDirection;
     let validity = true;
@@ -60,6 +67,15 @@ export function gameboardFactory(board) {
 
     if (validity == true) {
       shipsOnBoard.push(tempShip);
+      if (tempShip.length == 5) {
+        captainShips.push(tempShip);
+      } else if (tempShip.length == 4) {
+        largeShips.push(tempShip);
+      } else if (tempShip.length == 3) {
+        mediumShips.push(tempShip);
+      } else if (tempShip.length == 2) {
+        smallShips.push(tempShip);
+      }
       _updateBoardLocations(tempShip);
     }
     return tempShip;
@@ -187,6 +203,20 @@ export function gameboardFactory(board) {
         currentShipPart[1],
       ];
     }
+  }
+
+  function _shipLengthValid(lengthInput) {
+    if (lengthInput == 5 && captainShips.length < 1) {
+      return true;
+    } else if (lengthInput == 4 && largeShips.length < 1) {
+      return true;
+    } else if (lengthInput == 3 && mediumShips.length < 2) {
+      return true;
+    } else if (lengthInput == 2 && smallShips.length < 1) {
+      return true;
+    }
+
+    return false;
   }
   return {
     board,

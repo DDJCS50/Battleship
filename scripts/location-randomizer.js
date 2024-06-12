@@ -24,6 +24,7 @@ export function generateShipLocation() {
     boardOne,
     [randomLetter, randomCoordinate],
     randomDirection,
-    name
+    name,
+    3
   );
 }

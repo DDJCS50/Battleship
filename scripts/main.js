@@ -1,7 +1,11 @@
 import { gameboardFactory } from "./gameboard.js";
 import { generateShipLocation } from "./location-randomizer.js";
+import { playerFactory } from "./player.js";
 
 export let boardOne = gameboardFactory();
+let humanBoard = gameboardFactory();
+let ComputerBoard = gameboardFactory();
+let human = playerFactory("human", humanBoard, true);
 
 // let shipOne = boardOne.placeShip(boardOne, ["A", 5], "north", "captain", 4);
 // // let invalidShip = boardOne.placeShip(
@@ -41,3 +45,4 @@ boardOne.receiveAttack(["b", 3]);
 boardOne.receiveAttack(["c", 3]);
 
 console.log(boardOne.shipsOnBoard);
+console.log(human);

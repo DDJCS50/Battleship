@@ -32,6 +32,7 @@ export function gameboardFactory(board) {
       generateShipLocation();
       return;
     } else if (_shipLengthValid(shipLength) == false) {
+      generateShipLocation();
       console.log(`${name} has an invalid ship length`);
       return;
     }
@@ -110,6 +111,7 @@ export function gameboardFactory(board) {
       console.log("Invalid attack");
       return;
     }
+    let shipWasHit = true;
     for (let i = 0; i < shipsOnBoard.length; i++) {
       for (let j = 0; j < shipsOnBoard[i].length; j++) {
         if (
@@ -118,9 +120,16 @@ export function gameboardFactory(board) {
           shipsOnBoard[i].hit(shipsOnBoard[i]);
           shipsOnBoard[i].shipHitLocations.push(coordinates);
           shipsOnBoard[i].isSunk(shipsOnBoard[i]);
+        } else {
+          shipWasHit = false;
         }
       }
     }
+
+    if (shipWasHit == false) {
+      console.log(`Attack at [${coordinates}] missed!`);
+    }
+
     hitLocations.push(coordinates);
     _updateBoardHits(coordinates);
   }
@@ -223,6 +232,10 @@ export function gameboardFactory(board) {
     hitLocations,
     shipsOnBoard,
     alpha,
+    captainShips,
+    largeShips,
+    mediumShips,
+    smallShips,
     placeShip,
     receiveAttack,
   };

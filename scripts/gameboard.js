@@ -29,10 +29,10 @@ export function gameboardFactory(board) {
   function placeShip(board, location, inputDirection, name, shipLength) {
     if (_invalidLocation(location)) {
       console.log("invalid location input, generating new ship");
-      generateShipLocation();
+      generateShipLocation(board);
       return;
     } else if (_shipLengthValid(shipLength) == false) {
-      generateShipLocation();
+      generateShipLocation(board);
       console.log(`${name} has an invalid ship length`);
       return;
     }
@@ -62,7 +62,7 @@ export function gameboardFactory(board) {
       }
     } else {
       console.log("ship present/ ship goes off board, generating new ship");
-      generateShipLocation();
+      generateShipLocation(board);
       return;
     }
 

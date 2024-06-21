@@ -1,6 +1,4 @@
-import { boardOne } from "./main.js";
-
-export function generateShipLocation() {
+export function generateShipLocation(inputBoard) {
   let directions = ["north", "south", "east", "west"];
   let randomNumber = 100;
   let defaultLength = 5;
@@ -9,10 +7,10 @@ export function generateShipLocation() {
   }
   let randomDirection = directions[randomNumber];
 
-  let letters = boardOne.alpha;
+  let letters = inputBoard.alpha;
   let randomLetter = "z";
-  while (!boardOne.alpha.includes(randomLetter.toUpperCase())) {
-    randomLetter = boardOne.alpha[Math.floor(Math.random() * 10)];
+  while (!inputBoard.alpha.includes(randomLetter.toUpperCase())) {
+    randomLetter = inputBoard.alpha[Math.floor(Math.random() * 10)];
   }
 
   let randomCoordinate = 101;
@@ -20,22 +18,22 @@ export function generateShipLocation() {
     randomCoordinate = Math.floor(Math.random() * 10);
   }
 
-  if (boardOne.captainShips.length < 1) {
+  if (inputBoard.captainShips.length < 1) {
     defaultLength = 5;
-  } else if (boardOne.largeShips.length < 1) {
+  } else if (inputBoard.largeShips.length < 1) {
     defaultLength = 4;
-  } else if (boardOne.mediumShips.length < 2) {
+  } else if (inputBoard.mediumShips.length < 2) {
     defaultLength = 3;
-  } else if (boardOne.smallShips.length < 1) {
+  } else if (inputBoard.smallShips.length < 1) {
     defaultLength = 2;
   } else {
     console.log("Board Full");
     return;
   }
 
-  let name = `randomShip${boardOne.shipsOnBoard.length}`;
-  boardOne.placeShip(
-    boardOne,
+  let name = `randomShip${inputBoard.shipsOnBoard.length}`;
+  inputBoard.placeShip(
+    inputBoard,
     [randomLetter, randomCoordinate],
     randomDirection,
     name,

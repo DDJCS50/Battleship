@@ -29,12 +29,12 @@ let human = playerFactory("human", humanBoard, true);
 //   "smallInvalid",
 //   2
 // );
-generateShipLocation();
-generateShipLocation();
-generateShipLocation();
-generateShipLocation();
-generateShipLocation();
-generateShipLocation();
+generateShipLocation(humanBoard);
+generateShipLocation(humanBoard);
+generateShipLocation(humanBoard);
+generateShipLocation(humanBoard);
+generateShipLocation(humanBoard);
+generateShipLocation(humanBoard);
 boardOne.receiveAttack(["A", 3]);
 boardOne.receiveAttack(["A", 2]);
 boardOne.receiveAttack(["A", 1]);

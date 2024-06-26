@@ -188,7 +188,9 @@ main .cellBox {
   padding: 24px;
   overflow: auto;
   height: 550px;
+  width: 550px;
   flex-direction: column-reverse;
+  overflow: visible;
 }
 main .cellBox .cell {
   display: flex;
@@ -196,7 +198,7 @@ main .cellBox .cell {
   justify-content: space-between;
   align-items: center;
   height: 25px;
-  width: 30px;
+  width: 25px;
   background-color: #e2e8f0;
   padding: 24px;
   border: 1px solid black;

@@ -204,6 +204,15 @@ main .cellBox .cell {
   border: 1px solid black;
   box-shadow: 6px 7px 10px -5px gray;
 }
+main .cellBox .shipPresent {
+  background-color: blue;
+}
+main .cellBox .shipHit {
+  background-color: red;
+}
+main .cellBox .missedAttack {
+  background-color: yellow;
+}
 
 #sidebar {
   height: 80vh;

@@ -1,4 +1,5 @@
 import { generateShipLocation } from "./location-randomizer.js";
+import { renderObject } from "./render.js";
 import { shipFactory } from "./ship.js";
 
 export function gameboardFactory(board) {
@@ -26,7 +27,14 @@ export function gameboardFactory(board) {
   }
   _createInitialBoard();
 
-  function placeShip(board, location, inputDirection, name, shipLength) {
+  function placeShip(
+    board,
+    location,
+    inputDirection,
+    name,
+    shipLength,
+    currentPlayerObject
+  ) {
     if (_invalidLocation(location)) {
       console.log("invalid location input, generating new ship");
       generateShipLocation(board);
@@ -79,6 +87,7 @@ export function gameboardFactory(board) {
       }
       _updateBoardLocations(tempShip);
     }
+    renderObject.renderShips(currentPlayerObject);
     return tempShip;
   }
 
@@ -106,7 +115,7 @@ export function gameboardFactory(board) {
     }
   }
 
-  function receiveAttack(coordinates) {
+  function receiveAttack(coordinates, playerSelected) {
     if (_validAttack(coordinates) != true) {
       console.log("Invalid attack");
       return;
@@ -129,9 +138,10 @@ export function gameboardFactory(board) {
     if (shipWasHit == false) {
       console.log(`Attack at [${coordinates}] missed!`);
     }
-
     hitLocations.push(coordinates);
     _updateBoardHits(coordinates);
+    renderObject.renderHits(playerSelected);
+    renderObject.renderMissedAttack(playerSelected);
   }
 
   function _validAttack(locationInput) {

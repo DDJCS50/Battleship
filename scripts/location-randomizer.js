@@ -32,11 +32,5 @@ export function generateShipLocation(inputBoard) {
   }
 
   let name = `randomShip${inputBoard.shipsOnBoard.length}`;
-  inputBoard.placeShip(
-    inputBoard,
-    [randomLetter, randomCoordinate],
-    randomDirection,
-    name,
-    defaultLength
-  );
+  inputBoard.placeShip(inputBoard, [randomLetter, randomCoordinate], randomDirection, name, defaultLength);
 }

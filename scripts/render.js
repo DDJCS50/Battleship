@@ -14,9 +14,7 @@ export function render() {
     let selectedBoard = player.playerBoard.board;
     for (let i = 0; i < selectedBoard.length; i++) {
       if (selectedBoard[i].shipPresent == true) {
-        let renderedCell = document.getElementById(
-          selectedBoard[i].location.toString().concat("-", player.playerName)
-        );
+        let renderedCell = document.getElementById(selectedBoard[i].location.toString().concat("-", player.playerName));
         renderedCell.classList = "shipPresent cell";
       }
     }
@@ -25,13 +23,8 @@ export function render() {
   function renderHits(player) {
     let selectedBoard = player.playerBoard.board;
     for (let i = 0; i < selectedBoard.length; i++) {
-      if (
-        selectedBoard[i].shipPresent == true &&
-        selectedBoard[i].hit == true
-      ) {
-        let renderedCell = document.getElementById(
-          selectedBoard[i].location.toString().concat("-", player.playerName)
-        );
+      if (selectedBoard[i].shipPresent == true && selectedBoard[i].hit == true) {
+        let renderedCell = document.getElementById(selectedBoard[i].location.toString().concat("-", player.playerName));
         renderedCell.classList = "shipHit cell";
       }
     }
@@ -40,13 +33,8 @@ export function render() {
   function renderMissedAttack(player) {
     let selectedBoard = player.playerBoard.board;
     for (let i = 0; i < selectedBoard.length; i++) {
-      if (
-        selectedBoard[i].shipPresent == false &&
-        selectedBoard[i].hit == true
-      ) {
-        let renderedCell = document.getElementById(
-          selectedBoard[i].location.toString().concat("-", player.playerName)
-        );
+      if (selectedBoard[i].shipPresent == false && selectedBoard[i].hit == true) {
+        let renderedCell = document.getElementById(selectedBoard[i].location.toString().concat("-", player.playerName));
         renderedCell.classList = "missedAttack cell";
       }
     }

@@ -27,14 +27,7 @@ export function gameboardFactory(board) {
   }
   _createInitialBoard();
 
-  function placeShip(
-    board,
-    location,
-    inputDirection,
-    name,
-    shipLength,
-    currentPlayerObject
-  ) {
+  function placeShip(board, location, inputDirection, name, shipLength, currentPlayerObject) {
     if (_invalidLocation(location)) {
       console.log("invalid location input, generating new ship");
       generateShipLocation(board);
@@ -57,15 +50,9 @@ export function gameboardFactory(board) {
         } else if (direction == "south") {
           tempShip.locationArray.push([nose[0], nose[1] + i]);
         } else if (direction == "east") {
-          tempShip.locationArray.push([
-            alpha[alpha.indexOf(nose[0]) - i],
-            nose[1],
-          ]);
+          tempShip.locationArray.push([alpha[alpha.indexOf(nose[0]) - i], nose[1]]);
         } else if (direction == "west") {
-          tempShip.locationArray.push([
-            alpha[alpha.indexOf(nose[0]) + i],
-            nose[1],
-          ]);
+          tempShip.locationArray.push([alpha[alpha.indexOf(nose[0]) + i], nose[1]]);
         }
       }
     } else {
@@ -115,17 +102,16 @@ export function gameboardFactory(board) {
     }
   }
 
-  function receiveAttack(coordinates, playerSelected) {
+  function receiveAttack(coordinates, playerSelected, playerAttacking) {
     if (_validAttack(coordinates) != true) {
       console.log("Invalid attack");
+      playerAttacking.playerAttack(playerAttacking, playerSelected);
       return;
     }
     let shipWasHit = true;
     for (let i = 0; i < shipsOnBoard.length; i++) {
       for (let j = 0; j < shipsOnBoard[i].length; j++) {
-        if (
-          coordinates.toString() == shipsOnBoard[i].locationArray[j].toString()
-        ) {
+        if (coordinates.toString() == shipsOnBoard[i].locationArray[j].toString()) {
           shipsOnBoard[i].hit(shipsOnBoard[i]);
           shipsOnBoard[i].shipHitLocations.push(coordinates);
           shipsOnBoard[i].isSunk(shipsOnBoard[i]);
@@ -156,9 +142,7 @@ export function gameboardFactory(board) {
       return true;
     }
 
-    attackExists = hitLocations.some(
-      (location) => location.toString() == locationInput.toString()
-    );
+    attackExists = hitLocations.some((location) => location.toString() == locationInput.toString());
 
     if (attackExists) {
       return false;
@@ -201,26 +185,16 @@ export function gameboardFactory(board) {
     return false;
   }
 
-  function _validLocationHelperIterate(
-    currentShipPart,
-    iteration,
-    shipBowDirection
-  ) {
+  function _validLocationHelperIterate(currentShipPart, iteration, shipBowDirection) {
     currentShipPart[0] = currentShipPart[0].toUpperCase();
     if (shipBowDirection == "north") {
       return [currentShipPart[0], currentShipPart[1] - iteration];
     } else if (shipBowDirection == "south") {
       return [currentShipPart[0], currentShipPart[1] + iteration];
     } else if (shipBowDirection == "east") {
-      return [
-        alpha[alpha.indexOf(currentShipPart[0]) - iteration],
-        currentShipPart[1],
-      ];
+      return [alpha[alpha.indexOf(currentShipPart[0]) - iteration], currentShipPart[1]];
     } else if (shipBowDirection == "west") {
-      return [
-        alpha[alpha.indexOf(currentShipPart[0]) + iteration],
-        currentShipPart[1],
-      ];
+      return [alpha[alpha.indexOf(currentShipPart[0]) + iteration], currentShipPart[1]];
     }
   }
 

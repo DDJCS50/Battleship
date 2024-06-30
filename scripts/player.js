@@ -4,9 +4,9 @@ export function playerFactory(playerName, playerBoard, playerTurn, playerBoardNa
   if (playerTurn == undefined) playerTurn = "human";
   if (playerBoardName == undefined) playerBoardName = "defaultBoard";
 
-  function playerAttack(player, playerTargeted) {
+  function playerAttack(player, playerTargeted, coordinatesClicked) {
     if (player.playerName == "human") {
-      // _cpuBoardAttack(player);
+      _cpuBoardAttack(playerTargeted, player, coordinatesClicked);
     } else if (player.playerName == "cpu") {
       _humanBoardAttack(playerTargeted, player);
     }
@@ -26,7 +26,9 @@ export function playerFactory(playerName, playerBoard, playerTurn, playerBoardNa
     playerSelect.playerBoard.receiveAttack([randomLetter, randomCoordinate], playerSelect, currentPlayer);
   }
 
-  function _cpuBoardAttack(playerSelect) {}
+  function _cpuBoardAttack(playerSelect, currentPlayer, locationClicked) {
+    playerSelect.playerBoard.receiveAttack(locationClicked, playerSelect, currentPlayer);
+  }
 
   return {
     playerName,

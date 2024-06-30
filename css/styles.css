@@ -187,8 +187,8 @@ main .cellBox {
   align-items: flex-start;
   padding: 24px;
   overflow: auto;
-  height: 550px;
-  width: 550px;
+  height: 548px;
+  width: auto;
   flex-direction: column-reverse;
   overflow: visible;
 }

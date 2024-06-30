@@ -9,15 +9,13 @@ export function shipFactory(length, hits, sunk, shipDirection, name) {
   if (name == undefined) name = "defaultShip";
 
   function hit(ship) {
-    console.log(`Ship ${name} Hit!`);
     ship.hits++;
   }
 
   function isSunk(ship) {
     if (ship.hits === ship.length) {
       ship.sunk = true;
-      console.log(`Battleship ${name} Sunk!`);
-      // alert("Battleship Sunk!");
+      alert(`Battleship ${name} Sunk!`);
     } else ship.sunk = false;
   }
 

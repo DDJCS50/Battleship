@@ -11,6 +11,7 @@ let cpu = playerFactory("cpu", cpuBoard, true, "cpuBoard");
 
 renderObject.renderCells(human);
 renderObject.renderCells(cpu);
+renderObject.renderClickEvents(cpu, human);
 let humanShipOne = humanBoard.placeShip(humanBoard, ["A", 5], "north", "humanShip", 3, human);
 let cpuShipOne = cpuBoard.placeShip(cpuBoard, ["A", 5], "north", "cpuShip", 3, cpu);
 // generateShipLocation(humanBoard);
@@ -19,12 +20,13 @@ let cpuShipOne = cpuBoard.placeShip(cpuBoard, ["A", 5], "north", "cpuShip", 3, c
 // generateShipLocation(humanBoard);
 // generateShipLocation(humanBoard);
 // generateShipLocation(humanBoard);
-humanBoard.receiveAttack(["A", 3], human, cpu);
-humanBoard.receiveAttack(["A", 2], human, cpu);
-humanBoard.receiveAttack(["A", 2], human, cpu);
-cpuBoard.receiveAttack(["A", 3], cpu, human);
-cpuBoard.receiveAttack(["A", 2], cpu, human);
+// humanBoard.receiveAttack(["A", 3], human, cpu);
+// humanBoard.receiveAttack(["A", 2], human, cpu);
+// humanBoard.receiveAttack(["A", 2], human, cpu);
+// cpuBoard.receiveAttack(["A", 3], cpu, human);
+// cpuBoard.receiveAttack(["A", 2], cpu, human);
 cpu.playerAttack(cpu, human);
+// human.playerAttack(human, cpu);
 
 console.log(boardOne.shipsOnBoard);
 console.log(human);

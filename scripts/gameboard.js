@@ -105,18 +105,21 @@ export function gameboardFactory(board) {
   function receiveAttack(coordinates, playerSelected, playerAttacking) {
     if (_validAttack(coordinates) != true) {
       console.log("Invalid attack");
+      if (playerAttacking.playerName == "human") {
+        alert("Choose a valid location to attack");
+        return;
+      }
       playerAttacking.playerAttack(playerAttacking, playerSelected);
       return;
     }
-    let shipWasHit = true;
+    let shipWasHit = false;
     for (let i = 0; i < shipsOnBoard.length; i++) {
       for (let j = 0; j < shipsOnBoard[i].length; j++) {
         if (coordinates.toString() == shipsOnBoard[i].locationArray[j].toString()) {
           shipsOnBoard[i].hit(shipsOnBoard[i]);
           shipsOnBoard[i].shipHitLocations.push(coordinates);
           shipsOnBoard[i].isSunk(shipsOnBoard[i]);
-        } else {
-          shipWasHit = false;
+          shipWasHit = true;
         }
       }
     }
@@ -124,8 +127,14 @@ export function gameboardFactory(board) {
     if (shipWasHit == false) {
       console.log(`Attack at [${coordinates}] missed!`);
     }
+
+    if (playerAttacking.playerName == "human") {
+      playerSelected.playerAttack(playerSelected, playerAttacking);
+    }
+
     hitLocations.push(coordinates);
     _updateBoardHits(coordinates);
+    _allShipsSunk(playerSelected, playerAttacking);
     renderObject.renderHits(playerSelected);
     renderObject.renderMissedAttack(playerSelected);
   }
@@ -210,6 +219,18 @@ export function gameboardFactory(board) {
     }
 
     return false;
+  }
+
+  function _allShipsSunk(playerBeingAttacked, playerDoingTheAttack) {
+    let shipsStillAlive = shipsOnBoard.length;
+    for (let i = 0; i < shipsOnBoard.length; i++) {
+      if (shipsOnBoard[i].sunk == true) {
+        shipsStillAlive--;
+      }
+    }
+    if (shipsStillAlive == 0) {
+      alert(`${playerBeingAttacked.playerName} player's ships have all been sunk, ${playerDoingTheAttack.playerName} player Wins!`);
+    }
   }
   return {
     board,

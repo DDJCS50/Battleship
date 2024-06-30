@@ -11,6 +11,9 @@ export function render() {
   }
 
   function renderShips(player) {
+    if (player.playerName == "cpu") {
+      return;
+    }
     let selectedBoard = player.playerBoard.board;
     for (let i = 0; i < selectedBoard.length; i++) {
       if (selectedBoard[i].shipPresent == true) {
@@ -40,11 +43,24 @@ export function render() {
     }
   }
 
+  function renderClickEvents(player, enemyPlayer) {
+    let boardSelect = player.playerBoard.board;
+    for (let i = 0; i < boardSelect.length; i++) {
+      let currentCell = document.getElementById(`${boardSelect[i].location}-${player.playerName}`);
+
+      currentCell.addEventListener("click", (event) => {
+        event.stopPropagation();
+        enemyPlayer.playerAttack(enemyPlayer, player, boardSelect[i].location);
+      });
+    }
+  }
+
   return {
     renderCells,
     renderShips,
     renderHits,
     renderMissedAttack,
+    renderClickEvents,
   };
 }
 export let renderObject = render();

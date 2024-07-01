@@ -1,3 +1,5 @@
+import { generateShipLocation } from "./location-randomizer.js";
+
 export function render() {
   function renderCells(player) {
     let cellBoxSelector = document.getElementById(player.playerBoardName);
@@ -50,9 +52,42 @@ export function render() {
 
       currentCell.addEventListener("click", (event) => {
         event.stopPropagation();
+        if (player.playerHasWon == true || enemyPlayer.playerHasWon == true) {
+          return;
+        }
         enemyPlayer.playerAttack(enemyPlayer, player, boardSelect[i].location);
       });
     }
+  }
+
+  function renderCreateShipBtnEvent(playerObject) {
+    let createShipBtn = document.getElementById("shipBuilderBtn");
+    createShipBtn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      generateShipLocation(playerObject.playerBoard, playerObject);
+    });
+  }
+
+  function renderMulliganInput() {
+    let sidebar = document.getElementById("sidebar");
+    let input = document.createElement("input");
+    input.type = "text";
+    input.id = "mulliganInput";
+    input.placeholder = "Mulligan ship? (y/n)";
+    sidebar.appendChild(input);
+  }
+
+  function renderMulliganEvent(player) {
+    let mulliganInput = document.getElementById("mulliganInput");
+    mulliganInput.addEventListener("input", () => {
+      let answer = document.getElementById("mulliganInput").value;
+      answer = answer.toString().toLowerCase();
+      if (answer == "y") {
+        player.playerBoard.mulliganShip(player);
+      } else if (answer == "n") {
+        mulliganInput.remove();
+      }
+    });
   }
 
   return {
@@ -61,6 +96,9 @@ export function render() {
     renderHits,
     renderMissedAttack,
     renderClickEvents,
+    renderCreateShipBtnEvent,
+    renderMulliganInput,
+    renderMulliganEvent,
   };
 }
 export let renderObject = render();

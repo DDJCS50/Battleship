@@ -226,6 +226,22 @@ main .cellBox .missedAttack {
   gap: 12px;
   background-color: #cbd5e1;
 }
+#sidebar button {
+  display: inline-block;
+  border: none;
+  padding: 1rem 2rem;
+  margin: 0;
+  text-decoration: none;
+  background: #0069ed;
+  color: #ffffff;
+  font-family: sans-serif;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 4px;
+  box-shadow: 6px 7px 10px -5px gray;
+}
 
 footer {
   background-color: #64748b;

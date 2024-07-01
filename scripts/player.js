@@ -1,8 +1,9 @@
-export function playerFactory(playerName, playerBoard, playerTurn, playerBoardName) {
+export function playerFactory(playerName, playerBoard, playerTurn, playerBoardName, playerHasWon) {
   if (playerName == undefined) playerName = "default";
   if (playerBoard == undefined) playerBoard = "defaultBoard";
   if (playerTurn == undefined) playerTurn = "human";
   if (playerBoardName == undefined) playerBoardName = "defaultBoard";
+  if (playerHasWon == undefined) playerHasWon = false;
 
   function playerAttack(player, playerTargeted, coordinatesClicked) {
     if (player.playerName == "human") {
@@ -35,6 +36,7 @@ export function playerFactory(playerName, playerBoard, playerTurn, playerBoardNa
     playerBoard,
     playerTurn,
     playerBoardName,
+    playerHasWon,
     playerAttack,
   };
 }

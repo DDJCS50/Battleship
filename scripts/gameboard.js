@@ -1,5 +1,5 @@
 import { generateShipLocation } from "./location-randomizer.js";
-import { renderObject } from "./render.js";
+import { render, renderObject } from "./render.js";
 import { shipFactory } from "./ship.js";
 
 export function gameboardFactory(board) {
@@ -30,10 +30,10 @@ export function gameboardFactory(board) {
   function placeShip(board, location, inputDirection, name, shipLength, currentPlayerObject) {
     if (_invalidLocation(location)) {
       console.log("invalid location input, generating new ship");
-      generateShipLocation(board);
+      generateShipLocation(board, currentPlayerObject);
       return;
     } else if (_shipLengthValid(shipLength) == false) {
-      generateShipLocation(board);
+      generateShipLocation(board, currentPlayerObject);
       console.log(`${name} has an invalid ship length`);
       return;
     }
@@ -57,7 +57,7 @@ export function gameboardFactory(board) {
       }
     } else {
       console.log("ship present/ ship goes off board, generating new ship");
-      generateShipLocation(board);
+      generateShipLocation(board, currentPlayerObject);
       return;
     }
 
@@ -75,6 +75,10 @@ export function gameboardFactory(board) {
       _updateBoardLocations(tempShip);
     }
     renderObject.renderShips(currentPlayerObject);
+    if (currentPlayerObject.playerName == "human") {
+      renderObject.renderMulliganInput();
+      renderObject.renderMulliganEvent(currentPlayerObject);
+    }
     return tempShip;
   }
 
@@ -128,15 +132,15 @@ export function gameboardFactory(board) {
       console.log(`Attack at [${coordinates}] missed!`);
     }
 
-    if (playerAttacking.playerName == "human") {
-      playerSelected.playerAttack(playerSelected, playerAttacking);
-    }
-
     hitLocations.push(coordinates);
     _updateBoardHits(coordinates);
-    _allShipsSunk(playerSelected, playerAttacking);
     renderObject.renderHits(playerSelected);
     renderObject.renderMissedAttack(playerSelected);
+    _allShipsSunk(playerSelected, playerAttacking);
+
+    if (playerAttacking.playerName == "human" && playerAttacking.playerHasWon == false) {
+      playerSelected.playerAttack(playerSelected, playerAttacking);
+    }
   }
 
   function _validAttack(locationInput) {
@@ -230,8 +234,15 @@ export function gameboardFactory(board) {
     }
     if (shipsStillAlive == 0) {
       alert(`${playerBeingAttacked.playerName} player's ships have all been sunk, ${playerDoingTheAttack.playerName} player Wins!`);
+      playerDoingTheAttack.playerHasWon = true;
     }
   }
+
+  function mulliganShip(currentPlayerObject) {
+    console.log(`${currentPlayerObject.playerName} requests a ship mulligan`);
+    document.getElementById("mulliganInput").remove();
+  }
+
   return {
     board,
     hitLocations,
@@ -243,5 +254,6 @@ export function gameboardFactory(board) {
     smallShips,
     placeShip,
     receiveAttack,
+    mulliganShip,
   };
 }

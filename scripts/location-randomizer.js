@@ -1,4 +1,4 @@
-export function generateShipLocation(inputBoard) {
+export function generateShipLocation(inputBoard, player) {
   let directions = ["north", "south", "east", "west"];
   let randomNumber = 100;
   let defaultLength = 5;
@@ -32,5 +32,5 @@ export function generateShipLocation(inputBoard) {
   }
 
   let name = `randomShip${inputBoard.shipsOnBoard.length}`;
-  inputBoard.placeShip(inputBoard, [randomLetter, randomCoordinate], randomDirection, name, defaultLength);
+  inputBoard.placeShip(inputBoard, [randomLetter, randomCoordinate], randomDirection, name, defaultLength, player);
 }

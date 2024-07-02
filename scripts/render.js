@@ -31,6 +31,21 @@ export function render() {
     for (let i = 0; i < selectedBoard.length; i++) {
       if (selectedBoard[i].shipPresent == true && selectedBoard[i].hit == true) {
         let renderedCell = document.getElementById(selectedBoard[i].location.toString().concat("-", player.playerName));
+        for (let j = 0; j < player.playerBoard.shipsOnBoard.length; j++) {
+          for (let k = 0; k < player.playerBoard.shipsOnBoard[j].locationArray.length; k++) {
+            if (selectedBoard[i].location.toString() == player.playerBoard.shipsOnBoard[j].locationArray[k].toString()) {
+              if (player.playerBoard.shipsOnBoard[j].shipDirection == "north") {
+                renderedCell.innerText = "^";
+              } else if (player.playerBoard.shipsOnBoard[j].shipDirection == "south") {
+                renderedCell.innerText = "v";
+              } else if (player.playerBoard.shipsOnBoard[j].shipDirection == "east") {
+                renderedCell.innerText = ">";
+              } else if (player.playerBoard.shipsOnBoard[j].shipDirection == "west") {
+                renderedCell.innerText = "<";
+              }
+            }
+          }
+        }
         renderedCell.classList = "shipHit cell";
       }
     }
@@ -99,7 +114,6 @@ export function render() {
         answer = answer.toString().toLowerCase();
         if (answer == "y") {
           if (mulliganCount >= 3) {
-            console.log("max mulligans reached");
             return;
           }
           player.playerBoard.mulliganShip(player);
@@ -135,9 +149,24 @@ export function render() {
       for (let i = 0; i < 5; i++) {
         generateShipLocation(enemyPlayer.playerBoard, enemyPlayer);
       }
-      console.log(player);
-      console.log(enemyPlayer);
+      mulliganCount = 0;
+      let mulliganInput = document.getElementById("mulliganInput");
+      if (mulliganInput != undefined && mulliganInput != null) {
+        mulliganInput.remove();
+      }
+      player.playerHasWon = false;
+      enemyPlayer.playerHasWon = false;
     });
+  }
+
+  function renderAlert(message) {
+    let alertBox = document.getElementById("alert");
+    alertBox.innerText = message.toString();
+  }
+
+  function removeAlert() {
+    let alertBox = document.getElementById("alert");
+    alertBox.innerText = "";
   }
 
   return {
@@ -151,6 +180,8 @@ export function render() {
     renderMulliganEvent,
     renderResetGameButton,
     renderResetEvent,
+    renderAlert,
+    removeAlert,
   };
 }
 export let renderObject = render();

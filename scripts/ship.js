@@ -1,3 +1,5 @@
+import { renderObject } from "./render.js";
+
 export function shipFactory(length, hits, sunk, shipDirection, name) {
   if (length === undefined) length = 0;
   if (hits === undefined) hits = 0;
@@ -15,7 +17,8 @@ export function shipFactory(length, hits, sunk, shipDirection, name) {
   function isSunk(ship) {
     if (ship.hits === ship.length) {
       ship.sunk = true;
-      alert(`Battleship ${name} Sunk!`);
+      renderObject.renderAlert(`Battleship ${name} Sunk!`);
+      setTimeout(renderObject.removeAlert, 3000);
     } else ship.sunk = false;
   }
 

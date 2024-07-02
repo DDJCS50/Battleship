@@ -1,7 +1,7 @@
 import { gameboardFactory } from "./gameboard.js";
 import { generateShipLocation } from "./location-randomizer.js";
 import { playerFactory } from "./player.js";
-import { render, renderObject } from "./render.js";
+import { renderObject } from "./render.js";
 
 export let boardOne = gameboardFactory();
 let humanBoard = gameboardFactory();

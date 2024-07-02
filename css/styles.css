@@ -206,7 +206,7 @@ main .cellBox {
 main .cellBox .cell {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   height: 25px;
   width: 25px;
@@ -214,6 +214,8 @@ main .cellBox .cell {
   padding: 24px;
   border: 1px solid black;
   box-shadow: 6px 7px 10px -5px gray;
+  font-size: larger;
+  font-weight: bolder;
 }
 main .cellBox .shipPresent {
   background-color: blue;

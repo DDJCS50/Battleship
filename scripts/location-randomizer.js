@@ -27,7 +27,6 @@ export function generateShipLocation(inputBoard, player) {
   } else if (inputBoard.smallShips.length < 1) {
     defaultLength = 2;
   } else {
-    console.log("Board Full");
     return;
   }
 

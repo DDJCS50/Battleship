@@ -240,6 +240,29 @@ export function gameboardFactory(board) {
 
   function mulliganShip(currentPlayerObject) {
     console.log(`${currentPlayerObject.playerName} requests a ship mulligan`);
+    let shipArraySelector = currentPlayerObject.playerBoard.shipsOnBoard;
+    let shipToBeRerolled = shipArraySelector[shipArraySelector.length - 1];
+    let boardSelector = currentPlayerObject.playerBoard.board;
+    for (let i = 0; i < shipToBeRerolled.length; i++) {
+      for (let j = 0; j < boardSelector.length; j++) {
+        if (boardSelector[j].location.toString() == shipToBeRerolled.locationArray[i].toString()) {
+          boardSelector[j].shipPresent = false;
+          let cellElement = document.getElementById(`${boardSelector[j].location}-human`);
+          cellElement.classList = "cell";
+        }
+      }
+    }
+    shipArraySelector.splice(shipArraySelector.length - 1, 1);
+    if (shipToBeRerolled.length == 5) {
+      currentPlayerObject.playerBoard.captainShips.splice(currentPlayerObject.playerBoard.captainShips.length - 1, 1);
+    } else if (shipToBeRerolled.length == 4) {
+      currentPlayerObject.playerBoard.largeShips.splice(currentPlayerObject.playerBoard.largeShips.length - 1, 1);
+    } else if (shipToBeRerolled.length == 3) {
+      currentPlayerObject.playerBoard.mediumShips.splice(currentPlayerObject.playerBoard.mediumShips.length - 1, 1);
+    } else if (shipToBeRerolled.length == 2) {
+      currentPlayerObject.playerBoard.smallShips.splice(currentPlayerObject.playerBoard.smallShips.length - 1, 1);
+    }
+    console.log(currentPlayerObject);
     document.getElementById("mulliganInput").remove();
   }
 

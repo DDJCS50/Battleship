@@ -64,6 +64,10 @@ export function render() {
     let createShipBtn = document.getElementById("shipBuilderBtn");
     createShipBtn.addEventListener("click", (event) => {
       event.stopPropagation();
+      let mulliganInputElement = document.getElementById("mulliganInput");
+      if (mulliganInputElement != undefined && mulliganInputElement != null) {
+        mulliganInputElement.remove();
+      }
       generateShipLocation(playerObject.playerBoard, playerObject);
     });
   }
@@ -77,15 +81,23 @@ export function render() {
     sidebar.appendChild(input);
   }
 
+  let mulliganCount = 0;
   function renderMulliganEvent(player) {
     let mulliganInput = document.getElementById("mulliganInput");
-    mulliganInput.addEventListener("input", () => {
-      let answer = document.getElementById("mulliganInput").value;
-      answer = answer.toString().toLowerCase();
-      if (answer == "y") {
-        player.playerBoard.mulliganShip(player);
-      } else if (answer == "n") {
-        mulliganInput.remove();
+    mulliganInput.addEventListener("keyup", (event) => {
+      if (event.key === "Enter") {
+        let answer = document.getElementById("mulliganInput").value;
+        answer = answer.toString().toLowerCase();
+        if (answer == "y") {
+          if (mulliganCount >= 3) {
+            console.log("max mulligans reached");
+            return;
+          }
+          player.playerBoard.mulliganShip(player);
+          mulliganCount++;
+        } else if (answer == "n") {
+          mulliganInput.remove();
+        }
       }
     });
   }

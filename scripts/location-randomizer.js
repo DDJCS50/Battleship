@@ -32,5 +32,14 @@ export function generateShipLocation(inputBoard, player) {
   }
 
   let name = `randomShip${inputBoard.shipsOnBoard.length}`;
+  if (defaultLength == 5) {
+    name = `${player.playerName}CaptainShip`;
+  } else if (defaultLength == 4) {
+    name = `${player.playerName}LargeShip`;
+  } else if (defaultLength == 3) {
+    name = `${player.playerName}MediumShip`;
+  } else if (defaultLength == 2) {
+    name = `${player.playerName}SmallShip`;
+  }
   inputBoard.placeShip(inputBoard, [randomLetter, randomCoordinate], randomDirection, name, defaultLength, player);
 }

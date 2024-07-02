@@ -1,3 +1,4 @@
+import { gameboardFactory } from "./gameboard.js";
 import { generateShipLocation } from "./location-randomizer.js";
 
 export function render() {
@@ -52,9 +53,13 @@ export function render() {
 
       currentCell.addEventListener("click", (event) => {
         event.stopPropagation();
+        if (player.playerBoard.shipsOnBoard.length < 5 || enemyPlayer.playerBoard.shipsOnBoard.length < 5) {
+          return;
+        }
         if (player.playerHasWon == true || enemyPlayer.playerHasWon == true) {
           return;
         }
+        mulliganCount = 3;
         enemyPlayer.playerAttack(enemyPlayer, player, boardSelect[i].location);
       });
     }
@@ -77,7 +82,11 @@ export function render() {
     let input = document.createElement("input");
     input.type = "text";
     input.id = "mulliganInput";
-    input.placeholder = "Mulligan ship? (y/n)";
+    input.placeholder = `Mulligan ship? (y/n) ${mulliganCount}/3 mulligans`;
+    if (mulliganCount >= 3) {
+      input.placeholder = `${mulliganCount}/3 mulligans reached`;
+    }
+
     sidebar.appendChild(input);
   }
 
@@ -102,6 +111,35 @@ export function render() {
     });
   }
 
+  function renderResetGameButton() {
+    let sidebar = document.getElementById("sidebar");
+    let resetGameBtn = document.createElement("button");
+    resetGameBtn.id = "resetGameBtn";
+    resetGameBtn.textContent = "Reset Game";
+    sidebar.appendChild(resetGameBtn);
+  }
+
+  function renderResetEvent(player, enemyPlayer) {
+    let resetGameBtn = document.getElementById("resetGameBtn");
+    let playerBoardSelector = document.getElementById(player.playerBoardName);
+    let enemyPlayerBoardSelector = document.getElementById(enemyPlayer.playerBoardName);
+    resetGameBtn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      player.playerBoard = gameboardFactory();
+      enemyPlayer.playerBoard = gameboardFactory();
+      playerBoardSelector.innerHTML = "";
+      enemyPlayerBoardSelector.innerHTML = "";
+      renderCells(player);
+      renderCells(enemyPlayer);
+      renderClickEvents(enemyPlayer, player);
+      for (let i = 0; i < 5; i++) {
+        generateShipLocation(enemyPlayer.playerBoard, enemyPlayer);
+      }
+      console.log(player);
+      console.log(enemyPlayer);
+    });
+  }
+
   return {
     renderCells,
     renderShips,
@@ -111,6 +149,8 @@ export function render() {
     renderCreateShipBtnEvent,
     renderMulliganInput,
     renderMulliganEvent,
+    renderResetGameButton,
+    renderResetEvent,
   };
 }
 export let renderObject = render();
